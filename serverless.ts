@@ -1,9 +1,9 @@
 import type { AWS } from '@serverless/typescript';
 
-import { hello } from './src/functions';
+import { helloWorld } from './src/functions';
 
 const serverlessConfiguration: AWS = {
-  service: 'serverless-ts-template',
+  service: 'serverless-helloworld',
   frameworkVersion: '2',
   useDotenv: true,
   custom: {
@@ -27,7 +27,7 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { hello },
+  functions: { helloWorld },
 };
 
 module.exports = serverlessConfiguration;

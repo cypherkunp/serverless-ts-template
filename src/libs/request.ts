@@ -1,21 +1,7 @@
+import { APIGatewayProxyEventQueryStringParameters } from 'aws-lambda';
+
 import { Schema } from '@hapi/joi';
 import log from '@libs/logger';
-
-/**
- * Validates the request body for errors
- *
- * @param {Object} requestBody body
- *
- * @returns {boolean} true if the request body gets parsed
- */
-function validateRequestBody(requestBody: string): boolean {
-  try {
-    JSON.parse(requestBody);
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
 
 function validateSchema(requestBodySchema: Schema, requestBody): object | null {
   const { error } = requestBodySchema.validate(requestBody, {
@@ -35,4 +21,24 @@ function validateSchema(requestBodySchema: Schema, requestBody): object | null {
   } else return null;
 }
 
-export { validateRequestBody, validateSchema };
+function validateQueryParams(
+  requestQueryParams: APIGatewayProxyEventQueryStringParameters,
+  requiredQueryParams: Array<string>
+) {
+  const validationErrors = {};
+  requestQueryParams = requestQueryParams || {};
+  requiredQueryParams.forEach(queryParam => {
+    if (!requestQueryParams[queryParam]) {
+      validationErrors[queryParam] = `${queryParam} is required`;
+    }
+  });
+
+  if (Object.keys(validationErrors).length === 0) {
+    return null;
+  } else {
+    log.debug('[request-validator.validateQueryParams.validationErrors] ', validationErrors);
+    return validationErrors;
+  }
+}
+
+export { validateQueryParams, validateSchema };

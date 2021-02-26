@@ -56,4 +56,10 @@ function getErrorResponse(statusCode: number, errorData: ErrorDataType, headers:
   return lambdaResponse;
 }
 
-export { getSuccessResponse, getErrorResponse, getFailResponse, APIResponseType };
+export {
+  getNoContentResponse,
+  getSuccessResponse,
+  getErrorResponse,
+  getFailResponse,
+  APIResponseType,
+};

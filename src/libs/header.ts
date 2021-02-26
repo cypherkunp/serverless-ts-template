@@ -1,4 +1,4 @@
-const accessControlAllowHeaders = [
+const commonAccessControlAllowHeaders = [
   'Content-Type',
   'X-Amz-Date',
   'Authorization',
@@ -38,11 +38,15 @@ export function getHeaderValue(headers: object, header: string): any {
   return headerValue;
 }
 
-function getCorsHeaders(requestHeaders: object = {}, allowMethods: Array<string>) {
+function getCorsHeaders(
+  requestHeaders: object = {},
+  allowMethods: Array<string>,
+  allowHeaders: Array<string> = []
+) {
   return {
-    'access-control-allow-headers': accessControlAllowHeaders.join(','),
-    'access-control-allow-methods': allowMethods.join(','),
+    'access-control-allow-headers': [commonAccessControlAllowHeaders, ...allowHeaders].join(','),
     'access-control-allow-origin': getHeaderValue(requestHeaders, 'origin') || '*',
+    'access-control-allow-methods': allowMethods.join(','),
   };
 }
 
