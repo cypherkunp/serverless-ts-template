@@ -1,6 +1,11 @@
 {
   "name": "serverless-ts-template",
   "version": "0.1.0",
+  "author": {
+    "name": "Devvrat Shukla",
+    "email": "devvratshukla@gmail.com",
+    "url": "http://cypherkunp.github.io/"
+  },
   "scripts": {
     "deploy": "sls deploy -s dev -r us-east-1 --aws-profile",
     "start": "sls offline start -s dev"
